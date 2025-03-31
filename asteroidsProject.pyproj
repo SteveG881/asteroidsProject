@@ -22,10 +22,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="asteroidsProject.py" />
+    <Compile Include="circleshape.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="constants.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="player.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
