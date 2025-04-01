@@ -3,7 +3,7 @@
 # throughout this file
 import pygame
 import constants
-import player
+from player import *
 
 def main():
     pygame.init()
@@ -16,8 +16,13 @@ def main():
     print(f"Screen width: {constants.SCREEN_WIDTH}")
     print(f"Screen height: {constants.SCREEN_HEIGHT}")
 
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+
     screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
-    player1 = player.Player(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
+    player1 = Player(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
 
     running = True
 
@@ -29,10 +34,12 @@ def main():
         #check inputs
 
         #update world
+        updatable.update(dt)
 
         #draw screen
         screen.fill("black")
-        player1.draw(screen)
+        for thing in drawable:
+            thing.draw(screen)
 
         #last
         pygame.display.flip()
