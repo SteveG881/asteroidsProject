@@ -1,9 +1,12 @@
 # this allows us to use code from
 # the open-source pygame library
 # throughout this file
+import sys
 import pygame
 import constants
 from player import *
+from asteroid import *
+from asteroidfield import *
 
 def main():
     pygame.init()
@@ -18,11 +21,16 @@ def main():
 
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+
 
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable)
 
     screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
     player1 = Player(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
+    field = AsteroidField()
 
     running = True
 
@@ -35,6 +43,11 @@ def main():
 
         #update world
         updatable.update(dt)
+
+        for rock in asteroids:
+            if rock.collide(player1):
+                print("Game over!")
+                sys.exit()
 
         #draw screen
         screen.fill("black")
