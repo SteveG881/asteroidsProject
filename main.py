@@ -7,6 +7,10 @@ import constants
 from player import *
 from asteroid import *
 from asteroidfield import *
+from shot import *
+
+#source venv/bin/activate
+#python3 main.py
 
 def main():
     pygame.init()
@@ -22,11 +26,13 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
 
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
+    Shot.containers = (shots, updatable, drawable)
 
     screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
     player1 = Player(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
@@ -48,6 +54,13 @@ def main():
             if rock.collide(player1):
                 print("Game over!")
                 sys.exit()
+        
+        for rock in asteroids:
+            for pebble in shots:
+                if rock.collide(pebble):
+                    rock.kill()
+                    pebble.kill()
+
 
         #draw screen
         screen.fill("black")
